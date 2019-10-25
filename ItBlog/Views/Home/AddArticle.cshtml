@@ -1,0 +1,15 @@
+﻿<form method="post" action="">
+    <input type="hidden"
+           value="@ViewBag.ArticleId" name="ArticleId">
+    <p>название</p>
+    <textarea name="Name" required></textarea>
+    <p>краткое описание</p>
+    <input type="text" name="ShortDescription" />
+    <p>Текст статьи</p>
+    <textarea name="FullDescription" required></textarea>
+    <p>Категория</p>
+    <input type="text" name="Category" required />
+    <p>Тэги</p>
+    <input type="text" name="Tags" />
+    <input type="submit" value="Отправить" />
+</form>

@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Редактировать статью";
+}
+@model ItBlog.Models.Article
+<h2>Cтатья № @Model.ArticleId</h2>
+@using (Html.BeginForm("EditArticle", "Home", FormMethod.Post))
+{
+<fieldset>
+    @Html.HiddenFor(m => m.ArticleId)
+    <p>
+        @Html.LabelFor(m => m.Name, "Название статьи")
+        <br />
+        @Html.EditorFor(m => m.Name)
+    </p>
+    <p>
+        @Html.LabelFor(m => m.Category, "Категория")
+        <br />
+        @Html.EditorFor(m => m.Category)
+    </p>
+    <p>
+        @Html.LabelFor(m => m.ShortDescription, "Краткое описание")
+        <br />
+        @Html.EditorFor(m => m.ShortDescription)
+
+    </p>
+    <p>
+        @Html.LabelFor(m => m.FullDescription, "Полное описание")
+        <br />
+        @Html.EditorFor(m => m.FullDescription)
+
+    </p>
+    <p>
+        @Html.LabelFor(m => m.Tags, "Теги(через пробел)")
+        <br />
+        @Html.EditorFor(m => m.Tags)
+
+    </p>
+    <p><input type="submit" value="Отправить" /></p>
+</fieldset>
+}

@@ -1,0 +1,33 @@
+﻿@model ItBlog.Models.ArticleCategoryViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<form asp-controller="Articles" asp-action="Index" method="get">
+    <p>
+
+        <select asp-for="Category" asp-items="Model.Categories">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<div>
+    <p><a href="/Home/AddArticle">ДОБАВИТЬ ЗАПИСЬ</a></p>
+    <p><a href="/Home/MyArticles">Мои записи</a></p>
+    <table>
+        @foreach (var b in ViewBag.Articles)
+        {
+        <tr>
+            <td> @b.Name</td>
+            <td> @b.ShortDescription</td>
+            <td> @b.Category</td>
+            <td> @b.UserMail  </td>
+            <td> @b.Time.ToUniversalTime()  </td>
+            <td> @b.Category</td>
+            <td><a href="/Home/ShowFull?id=@b.ArticleId">Смотреть всю</a></td>
+        </tr>
+        }
+    </table>
+</div>
