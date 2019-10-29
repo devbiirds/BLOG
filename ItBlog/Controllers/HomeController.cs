@@ -5,34 +5,82 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace ItBlog.Controllers
 {
     public class HomeController : Controller
     {
         BlogContext db = new BlogContext();
+ 
 
-        public async Task<ActionResult> Index(string Category)
-        { 
-            IQueryable<string> CategoryQuery = from m in db.Articles
-                                            orderby m.Category
-                                            select m.Category;
-            var articles = from m in db.Articles
-                         select m;
-            if (!string.IsNullOrEmpty(Category))
+        public ActionResult Index(string articleCat, string searchString,DateTime? fromDate,DateTime? forDate)
+        {
+            if (fromDate == null)
+                fromDate = new DateTime(2019, 1, 1);
+            if (forDate == null)
+                forDate = new DateTime(2080, 1, 1);
+            if (!String.IsNullOrEmpty(searchString) && articleCat=="All")
             {
-                articles = articles.Where(s => s.Category.Contains(Category));
+                var art = new List<Article>();
+                foreach(Article b in db.Articles)
+                {
+                    if (b.Tags.Contains(searchString) && b.Time>fromDate && b.Time<forDate)
+                        art.Add(b);
+                }
+                ViewBag.Articles = art;
+                return View();
             }
-            var articleCategoryVM = new ArticleCategoryViewModel
+            if (!String.IsNullOrEmpty(searchString))
             {
-                Categories = new SelectList(await CategoryQuery.Distinct().ToListAsync()),
-                Articles = await articles.ToListAsync()
-            };
-            ViewBag.Articles = articles;
-            return View(articleCategoryVM);
+                var art = new List<Article>();
+                foreach (Article b in db.Articles)
+                {
+                    if (b.Tags.Contains(searchString) && articleCat==b.Category && b.Time > fromDate && b.Time < forDate)
+                        art.Add(b);
+                }
+                ViewBag.Articles = art;
+                return View();
+            }
+            if (articleCat!="All" && articleCat!=null)
+            {
+                var art = new List<Article>();
+                foreach (Article b in db.Articles)
+                {
+                    if (articleCat == b.Category && b.Time > fromDate && b.Time < forDate)
+                        art.Add(b);
+                }
+                ViewBag.Articles = art;
+                return View();
+            }
+            var article = new List<Article>();
+            foreach (Article b in db.Articles)
+            {
+                
+                if (b.Time > fromDate && b.Time < forDate)
+                    article.Add(b);
+            }
+            ViewBag.Articles = article;
+            return View();
         }
-        [Authorize]
-        [HttpGet]
+        public ActionResult DeleteArticle(int? id)
+        {
+            Article article = db.Articles.Find(id);
+            if(article==null)
+            {
+                return Redirect("MyArticles");
+            }
+            return View(article);
+        }
+        [HttpPost,ActionName("DeleteArticle")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Article article = db.Articles.Find(id);
+            db.Articles.Remove(article);
+            db.SaveChanges();
+            return Redirect("MyArticles");
+        }
 
         [Authorize]
         public ActionResult MyArticles()
@@ -95,8 +143,12 @@ namespace ItBlog.Controllers
         }
         public ActionResult ShowFull(int id)
         {
-            List<Article> articles = db.Articles.ToList<Article>();
-            ViewBag.Article = articles[id - 1];
+            Article article = db.Articles.Find(id);
+            if(article==null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Article = article;
             return View();
         }
         public ActionResult About()

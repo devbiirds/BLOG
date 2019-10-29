@@ -1,32 +1,42 @@
-﻿@model ItBlog.Models.ArticleCategoryViewModel
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<form asp-controller="Articles" asp-action="Index" method="get">
-    <p>
-
-        <select asp-for="Category" asp-items="Model.Categories">
-            <option value="">All</option>
-        </select>
-        <input type="submit" value="Filter" />
-    </p>
-</form>
+    <form asp-controller="Movies" asp-action="Index" method="get">
+        <p>
+            Category:
+            <select id="articleCat" name="articleCat">
+                <option>All</option>
+                <option>C#</option>
+                <option>C/C++</option>
+                <option>Python</option>
+                <option>Java</option>
+            </select>
+            Tag: <input type="text" name="SearchString">
+            <input type="date" name="fromDate" value="@DateTime.MinValue" />
+            <input type="date" name="forDate" value="@DateTime.MaxValue"/>
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
 <div>
-    <p><a href="/Home/AddArticle">ДОБАВИТЬ ЗАПИСЬ</a></p>
-    <p><a href="/Home/MyArticles">Мои записи</a></p>
+    <p><a href="/Home/AddArticle">Add article</a></p>
     <table>
         @foreach (var b in ViewBag.Articles)
         {
         <tr>
-            <td> @b.Name</td>
-            <td> @b.ShortDescription</td>
-            <td> @b.Category</td>
+            <td> @b.Name </td>
+            <td> @b.ShortDescription </td>
+            <td> @b.Category </td>
             <td> @b.UserMail  </td>
             <td> @b.Time.ToUniversalTime()  </td>
-            <td> @b.Category</td>
-            <td><a href="/Home/ShowFull?id=@b.ArticleId">Смотреть всю</a></td>
+            <td> @b.Tags  </td>
+            <td><a href="/Home/ShowFull?id=@b.ArticleId">Show</a></td>
+            @if (b.UserMail == User.Identity.Name)
+            {
+
+                <td><a href="/Home/EditArticle?id=@b.ArticleId">Edit</a></td>
+                <td><a href="/Home/DeleteArticle?id=@b.ArticleId">Delete</a></td>
+            }
+
         </tr>
         }
     </table>

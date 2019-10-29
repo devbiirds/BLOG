@@ -1,21 +1,20 @@
 ﻿@{ 
-    ViewBag.Title = "Ваши статьи";
+    ViewBag.Title = "My articles";
 }
 
     <div>
-        <p><a href="/Home/AddArticle">ДОБАВИТЬ ЗАПИСЬ</a></p>
+        <p><a href="/Home/AddArticle">Add article</a></p>
         <table>
             @foreach (var b in ViewBag.Articles)
             {
                 <tr>
                     <td> @b.Name</td>
                     <td> @b.ShortDescription</td>
-                    <td> @b.UserMail  </td>
                     <td> @b.Time.ToUniversalTime()  </td>
                     <td> @b.Category</td>
-                    <td><a href="/Home/ShowFull?id=@b.ArticleId">Смотреть всю</a></td>
-                    <td><a href="/Home/EditArticle?id=@b.ArticleId">Редактировать</a></td>
-                    <td><a href="/Home/DeleteArticle">Удалить запись</a></td>
+                    <td><a href="/Home/ShowFull?id=@b.ArticleId">Show</a></td>
+                    <td><a href="/Home/EditArticle?id=@b.ArticleId">Edit</a></td>
+                    <td><a href="/Home/DeleteArticle?id=@b.ArticleId">Delete</a></td>
                 </tr>
             }
         </table>

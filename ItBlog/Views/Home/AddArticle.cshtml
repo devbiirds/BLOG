@@ -1,15 +1,32 @@
-﻿<form method="post" action="">
-    <input type="hidden"
-           value="@ViewBag.ArticleId" name="ArticleId">
-    <p>название</p>
-    <textarea name="Name" required></textarea>
-    <p>краткое описание</p>
-    <input type="text" name="ShortDescription" />
-    <p>Текст статьи</p>
-    <textarea name="FullDescription" required></textarea>
-    <p>Категория</p>
-    <input type="text" name="Category" required />
-    <p>Тэги</p>
-    <input type="text" name="Tags" />
-    <input type="submit" value="Отправить" />
-</form>
+﻿@model ItBlog.Models.Article
+<h2>Create article</h2>
+
+@using (Html.BeginForm("AddArticle", "Home", FormMethod.Post))
+{
+    <div class="item">
+        <label> Name </label>
+        <input id="Name" name="Name" type="text" required />
+    </div>
+    <div class="item">
+        <label>Short Description</label>
+        @Html.TextBoxFor(m => m.ShortDescription);
+    </div>
+    <div class="item">
+        <label>Full Description</label>
+        <input id="FullDescription" name="FullDescription" type="text" required/>
+    </div>
+    <div class="item">
+        <label>Tags(Separator ' ')</label>
+        @Html.TextBoxFor(m => m.Tags);
+    </div>
+    <div>
+        <label>Category</label>
+        <select id="Category" name="Category">
+            <option>C/C++</option>
+            <option>C#</option>
+            <option>Python</option>
+            <option>Java</option>
+        </select>
+    </div>
+    <input type="submit" value="Create" />
+}

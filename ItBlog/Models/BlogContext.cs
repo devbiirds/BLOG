@@ -16,11 +16,13 @@ namespace ItBlog.Models
     
     public class BlogDbInitializer:DropCreateDatabaseAlways<BlogContext>
     {
+
         protected override void Seed(BlogContext db)
         {
+            
             db.Articles.Add(new Article { Category="C#" ,Name="Name", FullDescription="I love C#",ShortDescription="Short Description",Time=new DateTime(2019,10,20),UserMail="caratosandre@gmail.com",Tags="sad"});
-            db.Articles.Add(new Article { Category = "C#", Name = "Name", FullDescription = "I love C#", ShortDescription = "Short Description", Time = new DateTime(2019, 10, 20), UserMail = "caratosandre@gmail.com", Tags="IE DS"});
-            db.Articles.Add(new Article { Category = "C#", Name = "Name", FullDescription = "I love C#", ShortDescription = "Short Description", Time = new DateTime(2019, 10, 20), UserMail = "caratosandre@gmail.com", Tags="RD XC"});
+            db.Articles.Add(new Article { Category = "C#", Name = "Name", FullDescription = "I love C#", ShortDescription = "Short Description", Time = new DateTime(2019, 10, 20), UserMail = "caratosandre@gmail.com", Tags = "IE DS" });
+            db.Articles.Add(new Article { Category = "C#", Name = "Name", FullDescription = "I love C#", ShortDescription = "Short Description", Time = new DateTime(2019, 10, 20), UserMail = "caratosandre@gmail.com", Tags="RD XC" }) ;
             db.SaveChanges();
             base.Seed(db);
         }

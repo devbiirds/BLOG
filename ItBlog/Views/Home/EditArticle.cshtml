@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Редактировать статью";
+    ViewBag.Title = "Edit article";
 }
 @model ItBlog.Models.Article
 <h2>Cтатья № @Model.ArticleId</h2>
@@ -8,33 +8,36 @@
 <fieldset>
     @Html.HiddenFor(m => m.ArticleId)
     <p>
-        @Html.LabelFor(m => m.Name, "Название статьи")
+        @Html.LabelFor(m => m.Name, "Name")
         <br />
         @Html.EditorFor(m => m.Name)
     </p>
     <p>
-        @Html.LabelFor(m => m.Category, "Категория")
-        <br />
-        @Html.EditorFor(m => m.Category)
+        <select id="Category" name="Category">
+            <option>C/C++</option>
+            <option>C#</option>
+            <option>Python</option>
+            <option>Java</option>
+        </select>
     </p>
     <p>
-        @Html.LabelFor(m => m.ShortDescription, "Краткое описание")
+        @Html.LabelFor(m => m.ShortDescription, "Short Description")
         <br />
         @Html.EditorFor(m => m.ShortDescription)
 
     </p>
     <p>
-        @Html.LabelFor(m => m.FullDescription, "Полное описание")
+        @Html.LabelFor(m => m.FullDescription, "Full Description")
         <br />
         @Html.EditorFor(m => m.FullDescription)
 
     </p>
     <p>
-        @Html.LabelFor(m => m.Tags, "Теги(через пробел)")
+        @Html.LabelFor(m => m.Tags, "Tags(Separate with '')")
         <br />
         @Html.EditorFor(m => m.Tags)
 
     </p>
-    <p><input type="submit" value="Отправить" /></p>
+    <p><input type="submit" value="Edit" /></p>
 </fieldset>
 }
