@@ -1,43 +1,55 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    
 }
-    <form asp-controller="Movies" asp-action="Index" method="get">
-        <p>
-            Category:
-            <select id="articleCat" name="articleCat">
+<div class="main" id="all">
+    <div class="wrapper">
+    <form asp-controller="Articles" asp-action="Index" method="get" class="form">
+        <p class="form-text"> Category:</p>
+            <select id="articleCat" name="articleCat" class="form_input" >
                 <option>All</option>
                 <option>C#</option>
                 <option>C/C++</option>
                 <option>Python</option>
                 <option>Java</option>
             </select>
-            Tag: <input type="text" name="SearchString">
-            <input type="date" name="fromDate" value="@DateTime.MinValue" />
-            <input type="date" name="forDate" value="@DateTime.MaxValue"/>
-            <input type="submit" value="Filter" />
-        </p>
+            <p class="form-text"> Tag:</p> 
+            <input class="form_input" type="text" name="SearchString">
+            <input class="form_input date" type="date" name="fromDate" value="@DateTime.MinValue" />
+            <input class="form_input date" type="date" name="forDate" value="@DateTime.MaxValue" />
+            <button type="submit" value="Filter" class="form_search">
+                <img src="~/Content/img/iconmonstr-magnifier-1.svg" />
+            </button>
     </form>
-<div>
-    <p><a href="/Home/AddArticle">Add article</a></p>
-    <table>
-        @foreach (var b in ViewBag.Articles)
-        {
-        <tr>
-            <td> @b.Name </td>
-            <td> @b.ShortDescription </td>
-            <td> @b.Category </td>
-            <td> @b.UserMail  </td>
-            <td> @b.Time.ToUniversalTime()  </td>
-            <td> @b.Tags  </td>
-            <td><a href="/Home/ShowFull?id=@b.ArticleId">Show</a></td>
-            @if (b.UserMail == User.Identity.Name)
+    <div class="article_items">
+        <div class="box_add">
+            <a class="button_add" href="/Home/AddArticle"><span> Add article</span></a>
+        </div>
+        <div class="items">
+            @foreach (var b in ViewBag.Articles)
             {
 
-                <td><a href="/Home/EditArticle?id=@b.ArticleId">Edit</a></td>
-                <td><a href="/Home/DeleteArticle?id=@b.ArticleId">Delete</a></td>
-            }
+                <div class="on_item">
+                    <div class="in_item">
+                        <div class="box_item name"><span> @b.Name </span></div>
+                        <div class="box_item description"><span> @b.ShortDescription </span></div>
+                        <div class="box_item category"><span> @b.Category </span></div>
+                        <div class="box_item usermail"><span> @b.UserMail </span> </div>
+                        <div class="box_item time"><span> @b.Time.ToUniversalTime() </span> </div>
+                        <div class="box_item tags"><span> @b.Tags  </span></div>
+                        <div class="box_item show"><a href="/Home/ShowFull?id=@b.ArticleId">Show</a></div>
+                        @if (b.UserMail == User.Identity.Name)
+                        {
 
-        </tr>
-        }
-    </table>
+                            <div class="box_item edit"><a href="/Home/EditArticle?id=@b.ArticleId">Edit</a></div>
+                            <div class="box_item delete"><a href="/Home/DeleteArticle?id=@b.ArticleId">Delete</a></div>
+                        }
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+    </div>
+
 </div>
